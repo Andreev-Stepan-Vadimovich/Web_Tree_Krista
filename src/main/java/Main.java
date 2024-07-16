@@ -7,6 +7,6 @@ public class Main {
         node.addNewNode("node3");
         node.getChildren().get(1).addNewNode("node4");
         String wr = node.toHTMLTreeStructure(0);
-        node.structureToFile();
+        System.out.println(wr);
     }
 }

@@ -24,6 +24,11 @@ public class Node {
     }
     public ArrayList<Node> getChildren() { return children; }
 
+    //Setters
+    public void setName(String newName) {this.name = newName;}
+    private void setID(int newID) {this.ID = newID;}
+    private void setChildren(ArrayList<Node>newChildren) {children = newChildren;}
+
     //Methods
     public void showNode() {
         System.out.println("Name: " + name);
