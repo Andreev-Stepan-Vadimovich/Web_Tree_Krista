@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 
 public class Node {
@@ -153,6 +154,19 @@ public class Node {
         for (int i = 0; i < lvl; ++i) System.out.print('\t');
         System.out.println(this.name);
         for (int i = 0; i < children.size(); ++i) children.get(i).printAsText(lvl + 1);
+    }
+
+    public void toJSONFile() {
+        //try {
+            // Java объект в JSON файл
+        //    mapper.writeValue(new File("/home/myuser/animals.json"), animal);
+
+            // Java объект в JSON строку
+        //    String jsonString = mapper.writeValueAsString(animal);
+        //    System.out.println(jsonString);
+        //} catch (Exception e){
+        //   System.out.println(e.getMessage());
+        //}
     }
 }
 
