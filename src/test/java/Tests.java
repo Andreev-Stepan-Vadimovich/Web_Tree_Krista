@@ -105,7 +105,7 @@ public class Tests {
         node.addNewNode("node2");
         node.addNewNode("node3");
         node.getChildren().get(1).addNewNode("node4");
-        String rightAns = "<ul>\n" + "<li>node1</li>\n" + "<ul>\n" + "\t<li>node2</li>\n" + "\t<li>node3</li>\n" + "\t<ul>\n" + "\t\t<li>node4</li>\n" + "\t</ul>\n" + "</ul>\n" + "</ul>";
+        String rightAns = "<ul>\n" + "<li>node1</li>\n" + "<ul>\n" + "\t<li>node2</li>\n" + "\t<li>node3</li>\n" + "\t<ul>\n" + "\t\t<li>node4</li>\n" + "\t</ul>\n" + "</ul>\n" + "</ul>" + "\n";
         assertEquals(rightAns, node.toHTMLTreeStructure(0), "Error");
     }
 }

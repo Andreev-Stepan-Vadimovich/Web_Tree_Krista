@@ -14,6 +14,11 @@ public class Node {
         this.ID = ID_FOR_NEW_NODE;
         ++ID_FOR_NEW_NODE;
     }
+    public Node() {
+        this.name = "Empty";
+        this.ID = ID_FOR_NEW_NODE;
+        ++ID_FOR_NEW_NODE;
+    }
 
     //Getters
     public String getName() {
