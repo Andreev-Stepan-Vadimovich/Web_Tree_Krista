@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.io.*;
 
 public class Node {
     //Fields
-    static int ID_FOR_NEW_NODE = 1;
-    String name;
-    int ID;
-    ArrayList<Node> children = new ArrayList<Node>();
+    private static int ID_FOR_NEW_NODE = 1;
+    private String name;
+    private int ID;
+    private ArrayList<Node> children = new ArrayList<Node>();
 
     //Constructors
     public Node(String name) {
@@ -125,6 +126,17 @@ public class Node {
         ans += toHTMLTreeStructure(0);
         ans += "</head>";
         return ans;
+    }
+
+    public void structureToFile() {
+        try(FileWriter writer = new FileWriter("tree.html", false))
+        {
+            writer.write(toHTMLTreeStructure(0));
+            writer.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void printAsText(int lvl) {
