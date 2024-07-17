@@ -125,7 +125,7 @@ public class Node {
 
         for (int i = 0; i < lvl; ++i) ans += '\t';
 
-        ans += "<li>" + this.name + " <a href=\"dit/" + this.ID + "\">Редактировать</a> " + "</li>" + '\n';
+        ans += "<li>" + this.name + " <a href=\"edit/" + this.ID + "\">Редактировать</a> " + "</li>" + '\n';
 
         if(children.size() > 0) {
             for (int i = 0; i < lvl; ++i) ans += '\t';
