@@ -1,4 +1,3 @@
-
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,18 +9,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-/**
- * Контроллер отвечающий за представление списка.
- */
-@Path("/list")
-public class ListPresentationController {
+@Path("/")
+public class TreePresentationController {
     private final List<String> list;
 
     /**
      * Запоминает список, с которым будет работать.
      * @param list список, с которым будет работать контроллер.
      */
-    public ListPresentationController(List<String> list) {
+    public TreePresentationController(List<String> list) {
         this.list = list;
     }
 
@@ -45,12 +41,12 @@ public class ListPresentationController {
     public String getList() {
         String result =
                 "<html>" +
-                "  <head>" +
-                "    <title>Вывод списка</title>" +
-                "  </head>" +
-                "  <body>" +
-                "    <h1>Список</h1>" +
-                "    <ul>";
+                        "  <head>" +
+                        "    <title>Tree presentation</title>" +
+                        "  </head>" +
+                        "  <body>" +
+                        "    <h1>Список</h1>" +
+                        "    <ul>";
         for (int i = 0; i < list.size(); i++) {
             String listItem = list.get(i);
             result += "<li>" + listItem + " <a href=\"edit/" + i + "\">Редактировать</a> </li>";
@@ -105,8 +101,8 @@ public class ListPresentationController {
                         "      <input type=\"submit\"/>";
         result +=
                 "            </form>" +
-                "  </body>" +
-                "</html>";
+                        "  </body>" +
+                        "</html>";
         return result;
     }
 
@@ -152,5 +148,4 @@ public class ListPresentationController {
                 "  </body>" +
                 "</html>";
     }
-
 }

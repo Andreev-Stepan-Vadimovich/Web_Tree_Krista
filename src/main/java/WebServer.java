@@ -18,5 +18,6 @@ public class WebServer {
         UndertowJaxrsServer server = new UndertowJaxrsServer().start(Undertow.builder().addHttpListener(8081, "0.0.0.0"));
         server.deploy(RestApplication.class);
         System.out.println("Сервер запущен: http://localhost:8081/");
+        System.out.println("Сервер запущен: http://localhost:8081/list");
     }
 }
