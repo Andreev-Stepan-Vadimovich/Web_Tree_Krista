@@ -85,4 +85,18 @@ public class TreePresentationController {
                         "</html>";
         return result;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+    @POST
+    @Path("/edit/{id}")
+    @Produces("text/html")
+    public Response editItem(@PathParam("id") int itemId, @FormParam("value") String itemValue) {
+        Node wr = root.findNode(itemId);
+        wr.rename(itemValue);
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URI для перенаправления");
+        }
+    }
 }
