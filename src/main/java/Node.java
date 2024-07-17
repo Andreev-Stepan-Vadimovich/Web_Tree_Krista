@@ -107,7 +107,7 @@ public class Node {
         ans += this.name + '\n';
         for (int i = 0; i < children.size(); ++i) ans += children.get(i).toString(lvl + 1);
         return ans;
-    }
+    } //lvl - это начальный уровень вершины в дереве (у корня == 0)
 
     public String toHTMLTreeStructure(int lvl) {
         String ans = "";
@@ -131,7 +131,7 @@ public class Node {
         return ans;
     }
 
-    public String makeHTMLFile() {
+    public String makeHTMLFormat() {
         String ans = "";
         ans += "<!DOCTYPE html>\n<head>\n";
         ans += toHTMLTreeStructure(0);
@@ -159,11 +159,11 @@ public class Node {
     public void toJSONFile() throws IOException {
         String nameFile = "JSON.json";
         ObjectMapper mapper = new ObjectMapper();
-        Node we = this;
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(nameFile), Node.class);
+        Node wr = this;
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(nameFile), wr);
     }
 
-    public void readJSON() throws IOException {
+    public void readJSONFile() throws IOException {
         Node object = new ObjectMapper().readValue(new File("JSON.json"), Node.class);
         this.ID = object.ID;
         this.children = object.children;
