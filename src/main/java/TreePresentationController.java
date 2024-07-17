@@ -71,17 +71,27 @@ public class TreePresentationController {
         String result =
                 "<html>" +
                         "  <head>" +
-                        "    <title>Редактирование элемента списка</title>" +
+                        "    <title>Редактирование элемента дерева</title>" +
                         "  </head>" +
                         "  <body>" +
-                        "    <h1>Редактирование элемента списка</h1>" +
+                        "    <h1>Редактирование элемента дерева</h1>" +
                         "    <form method=\"post\" action=\"/edit/" + itemId + "\">" +
                         "      <p>Значение</p>" +
                         "      <input type=\"text\" name=\"value\" value=\"" + treeItem.getName() +"\"/>" +
-                        "      <input type=\"submit\"/>";
-        result +=
-                "            </form>" +
-                        "  </body>" +
+                        "      <input type=\"submit\"/>" +
+                        "    </form>";
+
+        result +=       "    <form method=\"post\" action=\"/deleteForId/" + itemId + "\">" +
+                        "      <p>ID для удаления</p>" +
+                        "      <input type=\"text\" name=\"value\" value=\"" + null +"\"/>" +
+                        "      <input type=\"submit\"/>" +
+                        "     </form>";
+
+        result +=       "<form method=\"post\" action=\"Delete_all_children\">" +
+                        "        <input type=\"submit\" value=\"Delete all children\"/>" +
+                        " </form>";
+
+        result +=       "  </body>" +
                         "</html>";
         return result;
     }
@@ -93,6 +103,32 @@ public class TreePresentationController {
     public Response editItem(@PathParam("id") int itemId, @FormParam("value") String itemValue) {
         Node wr = root.findNode(itemId);
         wr.rename(itemValue);
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URI для перенаправления");
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    @POST
+    @Path("/deleteForId/{id}")
+    @Produces("text/html")
+    public Response deleteForId(@PathParam("id") int itemId, @FormParam("value") int deleteID) {
+        root.deleteNodeForID(deleteID);
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URI для перенаправления");
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    @POST
+    @Path("/edit/Delete_all_children")
+    @Produces("text/html")
+    public Response deleteAllChildren(@PathParam("id") int itemId) {
+        root.deleteAllChildren();
         try {
             return Response.seeOther(new URI("/")).build();
         } catch (URISyntaxException e) {
