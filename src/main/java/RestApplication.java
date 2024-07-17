@@ -11,12 +11,17 @@ import java.util.Set;
 public class RestApplication extends Application {
 
     private List<String> list = new ArrayList<>();
+    Node node = new Node("root");
 
     public RestApplication() {
         list.add("aaa");
         list.add("bbb");
         list.add("ccc");
         list.add("ddd");
+
+        node.addNewNode("node2");
+        node.addNewNode("node3");
+        node.getChildren().get(1).addNewNode("node4");
     }
 
     /**
@@ -27,7 +32,7 @@ public class RestApplication extends Application {
     public Set<Object> getSingletons() {
         Set<Object> resources = new HashSet<>();
         resources.add(new ListPresentationController(list));
-        resources.add(new TreePresentationController(list));
+        resources.add(new TreePresentationController(node));
         resources.add(new LoginController());
         return resources;
     }

@@ -11,19 +11,13 @@ import java.util.List;
 
 @Path("/")
 public class TreePresentationController {
-    private final List<String> list;
+    private Node root;
 
-    /**
-     * Запоминает список, с которым будет работать.
-     * @param list список, с которым будет работать контроллер.
-     */
-    public TreePresentationController(List<String> list) {
-        this.list = list;
+    public TreePresentationController(Node root) {
+        this.root = root;
     }
 
-    /**
-     * Пример вывода простого текста.
-     */
+    //------------------------------------------------------------------------------------------------------------------
     @GET
     @Path("example")
     @Produces("text/plain")
@@ -31,10 +25,7 @@ public class TreePresentationController {
         return "hello world";
     }
 
-    /**
-     * Выводит HTML-страницу со списком, ссылками на страницы редактирования и копкой добавления записи.
-     * @return HTML-страница со списком.
-     */
+    //------------------------------------------------------------------------------------------------------------------
     @GET
     @Path("/")
     @Produces("text/html")
@@ -45,14 +36,11 @@ public class TreePresentationController {
                         "    <title>Tree presentation</title>" +
                         "  </head>" +
                         "  <body>" +
-                        "    <h1>Список</h1>" +
-                        "    <ul>";
-        for (int i = 0; i < list.size(); i++) {
-            String listItem = list.get(i);
-            result += "<li>" + listItem + " <a href=\"edit/" + i + "\">Редактировать</a> </li>";
-        }
-        result += "    </ul>" +
-                "      <br/>" +
+                        "    <h1>Tree</h1>";
+
+        result += root.toHTMLTreeStructure(0);
+
+        result +=  "      <br/>" +
                 "      <form method=\"post\" action=\"add_random_item\">" +
                 "        <input type=\"submit\" value=\"Add random item\"/>" +
                 "      </form>" +
@@ -61,16 +49,12 @@ public class TreePresentationController {
         return result;
     }
 
-    /**
-     * Пример обработки POST запроса.
-     * Добавляет одну случайную запись в список и перенаправляет пользователя на основную страницу со списком.
-     * @return перенаправление на основную страницу со списком.
-     */
+    //------------------------------------------------------------------------------------------------------------------
     @POST
     @Path("add_random_item")
     @Produces("text/html")
     public Response addRandomItem() {
-        list.add("zzz");
+        root.addNewNode("randomNode");
         try {
             return Response.seeOther(new URI("/")).build();
         } catch (URISyntaxException e) {
@@ -78,16 +62,12 @@ public class TreePresentationController {
         }
     }
 
-    /**
-     * Выводит страничку для редактирования одного элемента.
-     * @param itemId индекс элемента списка.
-     * @return страничка для редактирования одного элемента.
-     */
+    //------------------------------------------------------------------------------------------------------------------
     @GET
     @Path("/edit/{id}")
     @Produces("text/html")
     public String getEditPage(@PathParam("id") int itemId) {
-        String listItem = list.get(itemId);
+        Node treeItem = root.findNode(itemId);
         String result =
                 "<html>" +
                         "  <head>" +
@@ -97,55 +77,12 @@ public class TreePresentationController {
                         "    <h1>Редактирование элемента списка</h1>" +
                         "    <form method=\"post\" action=\"/edit/" + itemId + "\">" +
                         "      <p>Значение</p>" +
-                        "      <input type=\"text\" name=\"value\" value=\"" + listItem +"\"/>" +
+                        "      <input type=\"text\" name=\"value\" value=\"" + treeItem.getName() +"\"/>" +
                         "      <input type=\"submit\"/>";
         result +=
                 "            </form>" +
                         "  </body>" +
                         "</html>";
         return result;
-    }
-
-    /**
-     * Редактирует элемент списка на основе полученных данных.
-     * @param itemId индекс элемента списка.
-     * @return перенаправление на основную страницу со списком.
-     */
-    @POST
-    @Path("/edit/{id}")
-    @Produces("text/html")
-    public Response editItem(@PathParam("id") int itemId, @FormParam("value") String itemValue) {
-        list.set(itemId, itemValue);
-        try {
-            return Response.seeOther(new URI("/")).build();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException("Ошибка построения URI для перенаправления");
-        }
-    }
-
-    /**
-     * Пример вывода вложенного списка.
-     */
-    @GET
-    @Path("nested_list")
-    @Produces("text/html")
-    public String getNestedListExample() {
-        return "<html>" +
-                "  <head>" +
-                "    <title>Hello world</title>" +
-                "  </head>" +
-                "  <body>" +
-                "    <h1>Hello world</h1>" +
-                "    <ul>" +
-                "      <li>1</li>" +
-                "      <li>2</li>" +
-                "      <li>3" +
-                "        <ul>" +
-                "          <li>3.1</li>" +
-                "        </ul>" +
-                "      </li>" +
-                "    </ul>" +
-                "  </body>" +
-                "</html>";
     }
 }

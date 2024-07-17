@@ -66,6 +66,16 @@ public class Node {
         return ans;
     }
 
+    public Node findNode(int ID) {
+        Node ans = null;
+        if (this.ID == ID) return this;
+        for (int i = 0; i < children.size(); ++i) {
+            if (ans != null) break;
+            ans = children.get(i).findNode(ID);
+        }
+        return ans;
+    }
+
     public void deleteNodeForName(String name) {
         for (int i = 0; i < children.size(); ++i) {
             if (children.get(i).getName().equals(name)) {
@@ -115,7 +125,7 @@ public class Node {
 
         for (int i = 0; i < lvl; ++i) ans += '\t';
 
-        ans += "<li>" + this.name + "</li>" + '\n';
+        ans += "<li>" + this.name + " <a href=\"dit/" + this.ID + "\">Редактировать</a> " + "</li>" + '\n';
 
         if(children.size() > 0) {
             for (int i = 0; i < lvl; ++i) ans += '\t';
