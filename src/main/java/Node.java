@@ -156,17 +156,18 @@ public class Node {
         for (int i = 0; i < children.size(); ++i) children.get(i).printAsText(lvl + 1);
     }
 
-    public void toJSONFile() {
-        //try {
-            // Java объект в JSON файл
-        //    mapper.writeValue(new File("/home/myuser/animals.json"), animal);
+    public void toJSONFile() throws IOException {
+        String nameFile = "JSON.json";
+        ObjectMapper mapper = new ObjectMapper();
+        Node we = this;
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(nameFile), Node.class);
+    }
 
-            // Java объект в JSON строку
-        //    String jsonString = mapper.writeValueAsString(animal);
-        //    System.out.println(jsonString);
-        //} catch (Exception e){
-        //   System.out.println(e.getMessage());
-        //}
+    public void readJSON() throws IOException {
+        Node object = new ObjectMapper().readValue(new File("JSON.json"), Node.class);
+        this.ID = object.ID;
+        this.children = object.children;
+        this.name = object.name;
     }
 }
 
